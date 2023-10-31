@@ -3,17 +3,17 @@ import Contato from "./components/contatos";
 import { Appstyled } from "./App";
 import Headers from "./components/header";
 
-
-
-
 export default function App() {
 const [listaContatos, setListaContatos] = useState([])
+const [id, setId] = useState(0);
 const [nome , setNome] = useState('')
 const [telefone, setTelefone] = useState('');
 const [temWhats, setTemWhats] = useState(false);
 const [observacao, setObservacao] = useState('');
 
-
+const trocaId = (e) => {
+  setId(id + 1);
+}
 const trocaNome = (e) =>{
   setNome(e.target.value);
 }
@@ -36,27 +36,28 @@ const limparFormulario = () =>{
 const adicionarContato = (e) => {
   e.preventDefault();
   const novoContato = {
+    id: id,
     nome: nome,
     telefone: telefone,
     temWhats: temWhats,
     observacao: observacao
     
   }
-  setListaContatos([...listaContatos , novoContato])
+  setListaContatos([...listaContatos , novoContato]);
   limparFormulario();
 }
 
-const editarFormulario = ({nome,telefone,temWhats,observacao} ) => {
+const editarFormulario = ({id,nome,telefone,temWhats,observacao} ) => {
   setNome(nome);
   setTelefone(telefone);
   setTemWhats(temWhats);
   setObservacao(observacao);
 
-  deletarFormulario(telefone);
+  deletarFormulario(id);
 }
 
-const deletarFormulario = (telefone) => {
-  setListaContatos(listaContatos.filter((contato) => contato.telefone!== telefone));
+const deletarFormulario = (id) => {
+  setListaContatos(listaContatos.filter((contato) => contato.id!== id));
 }
 
   return (
@@ -68,16 +69,16 @@ const deletarFormulario = (telefone) => {
       
     <h1> Adicionar Contatos </h1>
       <hr />
-      <form onSubmit={adicionarContato} onReset={limparFormulario}>
+      <form onSubmit={adicionarContato} onReset={limparFormulario} onClick={trocaId}>
         <div>
           <label className="label" htmlFor="nome">Nome: </label>
           <input type="text" placeholder="Ex.: Jefferson" id="nome" 
-            onChange={trocaNome} value={nome}  />
+            onChange={trocaNome} value={nome} required />
         </div>
         <div>
           <label className="label" htmlFor="telefone">Telefone: </label>
-          <input type="text" placeholder="(99) 99999-9999" id="telefone" 
-             onChange={trocaTelefone} value={telefone} />
+          <input type="number" placeholder="(99) 99999-9999" id="telefone" maxLength={11} minLength={11}
+             onChange={trocaTelefone} value={telefone} required/>
         </div>
         <div>
           <label className="label" htmlFor="whatsapp">Possui WhatsApp?</label>
@@ -85,11 +86,11 @@ const deletarFormulario = (telefone) => {
         </div>
         <div>
           <label className="label" htmlFor="observacoes">Observações: </label>
-          <input type="text" id="observacao" maxLength="100" onChange={trocaObservacao} value={observacao} />
+          <input type="text" id="observacao" maxLength="100" onChange={trocaObservacao} value={observacao} required/>
         </div>
         <div>
-          <input type="submit" id="botao-criar" value="Salvar" onClick={adicionarContato} />
-          <input type="reset" id="botao-limpar" value="Limpar" onClick={limparFormulario} />    
+          <input type="submit" id="botao-criar" value="Salvar" />
+          <input type="reset" id="botao-limpar" value="Limpar" onClick={limparFormulario} required />
         </div>
       </form>
 
@@ -99,6 +100,7 @@ const deletarFormulario = (telefone) => {
       <table>
         <thead>
           <tr>
+          <th>Id</th>
             <th>Nome</th>
             <th>Telefone</th>
             <th>WhatsApp</th>
@@ -108,7 +110,7 @@ const deletarFormulario = (telefone) => {
           </tr>
         </thead>
         <tbody>
-          {listaContatos.map(contato => <Contato  contato={contato} editarFormulario={editarFormulario} deletarFormulario={deletarFormulario}/>)}
+          {listaContatos.map(contato => <Contato key={contato.id}  contato={contato} editarFormulario={editarFormulario} deletarFormulario={deletarFormulario}/>)}
         </tbody>
       </table> 
 
