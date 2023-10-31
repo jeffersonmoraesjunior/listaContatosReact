@@ -1,12 +1,18 @@
-import {useState} from "react"
-import Contato from "./components/Contatos";
+import React , {useState} from "react";
+import Contato from "./components/contatos";
+import { Appstyled } from "./App";
+import Headers from "./components/header";
+
+
+
 
 export default function App() {
 const [listaContatos, setListaContatos] = useState([])
 const [nome , setNome] = useState('')
 const [telefone, setTelefone] = useState('');
-const [temwhats, setTemwhats] = useState(false);
+const [temWhats, setTemWhats] = useState(false);
 const [observacao, setObservacao] = useState('');
+
 
 const trocaNome = (e) =>{
   setNome(e.target.value);
@@ -15,16 +21,15 @@ const trocaTelefone = (e) =>{
   setTelefone(e.target.value);
 }
 const trocaTemwhats = (e) =>{
-  setTemwhats(e.target.checked);
+  setTemWhats(e.target.checked);
 }
 const trocaObservacao = (e) =>{
   setObservacao(e.target.value);
 }
-
 const limparFormulario = () =>{
   setNome('');
   setTelefone('');
-  setTemwhats(false);
+  setTemWhats(false);
   setObservacao('');
 }
 
@@ -33,17 +38,18 @@ const adicionarContato = (e) => {
   const novoContato = {
     nome: nome,
     telefone: telefone,
-    temwhats: temwhats,
+    temWhats: temWhats,
     observacao: observacao
+    
   }
   setListaContatos([...listaContatos , novoContato])
   limparFormulario();
 }
 
-const editarFormulario = ({nome,telefone,temwhats,observacao} ) => {
+const editarFormulario = ({nome,telefone,temWhats,observacao} ) => {
   setNome(nome);
   setTelefone(telefone);
-  setTemwhats(temwhats);
+  setTemWhats(temWhats);
   setObservacao(observacao);
 
   deletarFormulario(telefone);
@@ -52,31 +58,37 @@ const editarFormulario = ({nome,telefone,temwhats,observacao} ) => {
 const deletarFormulario = (telefone) => {
   setListaContatos(listaContatos.filter((contato) => contato.telefone!== telefone));
 }
+
   return (
     <>
-      <h1> Adicionar Contatos </h1>
+    <Headers/>
+    <Appstyled>
+  <div className="painel">
+    <div>
+      
+    <h1> Adicionar Contatos </h1>
       <hr />
-      <form onSubmit={adicionarContato}>
+      <form onSubmit={adicionarContato} onReset={limparFormulario}>
         <div>
           <label className="label" htmlFor="nome">Nome: </label>
-          <input type="text" placeholder="Ex.: Jefferson" id="nome" required maxLength="50" 
-            onChange={trocaNome} value={nome} />
+          <input type="text" placeholder="Ex.: Jefferson" id="nome" 
+            onChange={trocaNome} value={nome}  />
         </div>
         <div>
           <label className="label" htmlFor="telefone">Telefone: </label>
-          <input type="number" placeholder="(99) 99999-9999" id="telefone" required minLength="11"
-            maxLength="11" onChange={trocaTelefone} value={telefone} />
+          <input type="text" placeholder="(99) 99999-9999" id="telefone" 
+             onChange={trocaTelefone} value={telefone} />
         </div>
         <div>
           <label className="label" htmlFor="whatsapp">Possui WhatsApp?</label>
-          <input type="checkbox" id="whatsApp" onChange={trocaTemwhats} checked={temwhats} />
+          <input type="checkbox" id="whatsApp" onChange={trocaTemwhats} checked={temWhats} />
         </div>
         <div>
           <label className="label" htmlFor="observacoes">Observações: </label>
           <input type="text" id="observacao" maxLength="100" onChange={trocaObservacao} value={observacao} />
         </div>
         <div>
-          <input type="submit" id="botao-criar" value="Salvar" onClick={adicionarContato}/>
+          <input type="submit" id="botao-criar" value="Salvar" onClick={adicionarContato} />
           <input type="reset" id="botao-limpar" value="Limpar" onClick={limparFormulario} />    
         </div>
       </form>
@@ -91,13 +103,21 @@ const deletarFormulario = (telefone) => {
             <th>Telefone</th>
             <th>WhatsApp</th>
             <th>Observações</th>          
+            <th>Editar</th>          
+            <th>Deletar</th>          
           </tr>
         </thead>
         <tbody>
-          {listaContatos.map(contato => <Contato key={telefone} contato={contato} editarFormulario={editarFormulario} deletarFormulario={deletarFormulario}/>)}
+          {listaContatos.map(contato => <Contato  contato={contato} editarFormulario={editarFormulario} deletarFormulario={deletarFormulario}/>)}
         </tbody>
       </table> 
 
-    </>
+      </div> 
+    </div>
+  
+  </Appstyled>
+  </>
   )
 }
+
+

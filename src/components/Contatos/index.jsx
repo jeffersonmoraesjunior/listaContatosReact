@@ -1,17 +1,21 @@
-/* eslint-disable react/prop-types */
-// eslint-disable-next-line react/prop-types
+import { ContStyle } from "./style";
+import {BsTrash} from "react-icons/Bs";
+import { BiEdit } from "react-icons/Bi"
+
 const Contato = ({ contato, editarFormulario, deletarFormulario}) => {
-    const {nome, telefone, temwhats, observacao}  = contato;
+    const {nome, telefone, temWhats, observacao}  = contato;
     return(
-        <tr>            
+        <ContStyle>
+        {/* <tr> */}
             <td>{nome}</td>
             <td>{telefone}</td>
-            <td>{temwhats ? 'Sim' : 'Não'}</td>
+            <td>{temWhats ? 'Sim' : 'Não'}</td>
             <td>{observacao}</td>
-            <td><button type="button" onClick={() => {editarFormulario(contato)}}>Editar</button></td>
-            <td><button type="button" onClick={() => {deletarFormulario(telefone)}}>Deletar</button></td>
-        </tr>
+            <td><BiEdit type="button" onClick={() => {editarFormulario(contato)}}/></td>
+            <td><BsTrash type="button" onClick={() => {deletarFormulario(telefone)}}/></td>
+        {/* </tr> */}
+        </ContStyle>
     );
 };
 
-export default Contato;
+export default Contato
