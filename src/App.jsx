@@ -64,61 +64,61 @@ const deletarFormulario = (id) => {
     <>
     <Headers/>
     <Appstyled>
-  <div className="painel">
-    <div>
-      
-    <h1> Adicionar Contatos </h1>
-      <hr />
-      <form onSubmit={adicionarContato} onReset={limparFormulario} onClick={trocaId}>
-        <div>
-          <label className="label" htmlFor="nome">Nome: </label>
-          <input type="text" placeholder="Ex.: Jefferson" id="nome" 
-            onChange={trocaNome} value={nome} required />
-        </div>
-        <div>
-          <label className="label" htmlFor="telefone">Telefone: </label>
-          <input type="number" placeholder="(99) 99999-9999" id="telefone" maxLength={11} minLength={11}
-             onChange={trocaTelefone} value={telefone} required/>
-        </div>
-        <div>
-          <label className="label" htmlFor="whatsapp">Possui WhatsApp?</label>
-          <input type="checkbox" id="whatsApp" onChange={trocaTemwhats} checked={temWhats} />
-        </div>
-        <div>
-          <label className="label" htmlFor="observacoes">Observações: </label>
-          <input type="text" id="observacao" maxLength="100" onChange={trocaObservacao} value={observacao} required/>
-        </div>
-        <div>
-          <input type="submit" id="botao-criar" value="Salvar" />
-          <input type="reset" id="botao-limpar" value="Limpar" onClick={limparFormulario} required />
-        </div>
-      </form>
+      <div className="painel">
+        <div>          
+        <h1> Adicionar Contatos </h1>
+          <hr />
+          <form onSubmit={adicionarContato} onReset={limparFormulario} onClick={trocaId}>
+            <div id="inputs">
+              <div>
+                <label className="label" htmlFor="nome">Nome: </label>
+                <input type="text" placeholder="Seu Nome Aqui..." id="nome" 
+                  onChange={trocaNome} value={nome} required />
+              </div>
+              <div>
+                <label className="label" htmlFor="telefone">Telefone: </label>
+                <input type="number" placeholder="(99) 99999-9999" id="telefone" maxLength={11} minLength={11}
+                  onChange={trocaTelefone} value={telefone} required/>
+              </div>
+              <div>
+                <label className="label" htmlFor="whatsapp">Possui WhatsApp?</label>
+                <input type="checkbox" id="whatsApp" onChange={trocaTemwhats} checked={temWhats} />
+              </div>
+              <div>
+                <label className="label" htmlFor="observacoes">Observações: </label>
+                <input type="text" id="observacao" maxLength="100" onChange={trocaObservacao} value={observacao} required/>
+              </div>
+              <div id="buttonInserir">
+                <input type="submit" id="botao-criar" value="Salvar" />
+                <input type="reset" id="botao-limpar" value="Limpar" onClick={limparFormulario} required />
+              </div>
+            </div>        
+          </form>
 
-      <hr />
-      <h1> Lista de Contatos </h1>
-      
-      <table>
-        <thead>
-          <tr>
-          <th>Id</th>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>WhatsApp</th>
-            <th>Observações</th>          
-            <th>Editar</th>          
-            <th>Deletar</th>          
-          </tr>
-        </thead>
-        <tbody>
-          {listaContatos.map(contato => <Contato key={contato.id}  contato={contato} editarFormulario={editarFormulario} deletarFormulario={deletarFormulario}/>)}
-        </tbody>
-      </table> 
-
-      </div> 
-    </div>
-  
-  </Appstyled>
-  </>
+          <hr />
+          <h1> Lista de Contatos </h1>
+          
+          <table>
+            <thead>
+              <tr>
+              <th>Id</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>WhatsApp</th>
+                <th>Observações</th>          
+                <th>Editar</th>          
+                <th>Deletar</th>          
+              </tr>
+            </thead>
+            <tbody>
+              {listaContatos.map(contato => <Contato key={contato.id}  contato={contato} editarFormulario={editarFormulario} deletarFormulario={deletarFormulario}/>)}
+            </tbody>
+          </table>
+        </div> 
+      </div>
+    
+    </Appstyled>
+    </>
   )
 }
 
